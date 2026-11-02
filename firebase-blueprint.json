@@ -1,0 +1,154 @@
+{
+  "entities": {
+    "SchoolConfig": {
+      "title": "SchoolConfig",
+      "description": "School settings, default admission form price, and class-wise form prices.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "schoolName": { "type": "string", "description": "Name of the school" },
+        "helplineNumber": { "type": "string", "description": "School contact helpline number" },
+        "websiteUrl": { "type": "string", "description": "Official school website URL" },
+        "youtubeMainUrl": { "type": "string", "description": "Main YouTube channel URL" },
+        "youtubeJuniorUrl": { "type": "string", "description": "Junior/Kids YouTube channel URL" },
+        "facebookUrl": { "type": "string", "description": "Facebook page URL" },
+        "instagramUrl": { "type": "string", "description": "Instagram profile URL" },
+        "activeSession": { "type": "string", "description": "Active academic year e.g. 2027-28" },
+        "defaultFormPrice": { "type": "integer", "description": "Default admission form fee in currency units" },
+        "classFormPrices": { "type": "object", "description": "Map of class name (Nursery, LKG, UKG, Class 1..12) to specific integer form price" },
+        "classTuitionFees": { "type": "object", "description": "Map of class name to monthly tuition fee" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "schoolName", "helplineNumber", "activeSession", "defaultFormPrice", "createdAt", "updatedAt"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "Admission enquiry and form issuance record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "studentName": { "type": "string", "description": "Applicant student name" },
+        "fatherName": { "type": "string", "description": "Father or guardian name" },
+        "mobileNumber": { "type": "string", "description": "Parent contact mobile number" },
+        "classInterested": { "type": "string", "description": "Target class from Nursery to Class 12" },
+        "address": { "type": "string", "description": "Residential address" },
+        "remarks": { "type": "string", "description": "Enquiry notes or follow-up remarks" },
+        "session": { "type": "string", "description": "Academic session e.g. 2027-28" },
+        "status": { "type": "string", "enum": ["Pending", "Form Issued", "Admitted", "Closed"], "description": "Enquiry lifecycle status" },
+        "formIssued": { "type": "boolean", "description": "Whether the admission form has been issued" },
+        "formPrice": { "type": "integer", "description": "Form fee amount collected or applicable" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "studentName", "fatherName", "mobileNumber", "classInterested", "address", "remarks", "session", "status", "formIssued", "formPrice", "createdAt", "updatedAt"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Enrolled or archived student record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "admissionNo": { "type": "string", "description": "Unique admission code" },
+        "studentName": { "type": "string", "description": "Full name of student" },
+        "fatherName": { "type": "string", "description": "Father or guardian name" },
+        "mobileNumber": { "type": "string", "description": "Contact mobile number" },
+        "className": { "type": "string", "description": "Current enrolled class" },
+        "section": { "type": "string", "description": "Class section e.g. A, B" },
+        "rollNumber": { "type": "string", "description": "Roll number in class" },
+        "address": { "type": "string", "description": "Residential address" },
+        "session": { "type": "string", "description": "Enrolled academic session" },
+        "status": { "type": "string", "enum": ["Active", "Passed Out", "Transferred"], "description": "Enrollment status" },
+        "annualFeeTotal": { "type": "integer", "description": "Total annual fee applicable" },
+        "annualFeePaid": { "type": "integer", "description": "Total fee paid so far" },
+        "attendancePresent": { "type": "integer", "description": "Total days present" },
+        "attendanceTotal": { "type": "integer", "description": "Total working days recorded" },
+        "examPercentage": { "type": "integer", "description": "Latest exam aggregate percentage (0-100)" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "admissionNo", "studentName", "fatherName", "mobileNumber", "className", "section", "rollNumber", "address", "session", "status", "annualFeeTotal", "annualFeePaid", "attendancePresent", "attendanceTotal", "examPercentage", "createdAt", "updatedAt"]
+    },
+    "FeeTransaction": {
+      "title": "FeeTransaction",
+      "description": "Fee collection, admission form fee, and deletion audit log entry.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "studentId": { "type": "string", "description": "Linked student or enquiry ID" },
+        "studentName": { "type": "string", "description": "Student name" },
+        "className": { "type": "string", "description": "Class name" },
+        "feeType": { "type": "string", "enum": ["Form Fee", "Admission Fee", "Tuition Fee", "Exam Fee", "Transport Fee"], "description": "Category of fee" },
+        "amount": { "type": "integer", "description": "Transaction amount" },
+        "paymentMode": { "type": "string", "enum": ["Cash", "UPI", "Bank Transfer", "Card"], "description": "Payment method" },
+        "session": { "type": "string", "description": "Academic session" },
+        "isDeleted": { "type": "boolean", "description": "Soft-deleted flag for Fee Deletion Log" },
+        "deletionReason": { "type": "string", "description": "Reason when marked deleted" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "studentId", "studentName", "className", "feeType", "amount", "paymentMode", "session", "isDeleted", "deletionReason", "createdAt", "updatedAt"]
+    },
+    "StaffMember": {
+      "title": "StaffMember",
+      "description": "Teaching and non-teaching staff member and payroll status.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "name": { "type": "string", "description": "Staff full name" },
+        "role": { "type": "string", "description": "Designation e.g. PGT Mathematics, Principal, Accountant" },
+        "department": { "type": "string", "description": "Department name" },
+        "mobileNumber": { "type": "string", "description": "Mobile phone" },
+        "monthlySalary": { "type": "integer", "description": "Monthly gross salary" },
+        "lastPaidMonth": { "type": "string", "description": "Last salary disbursed month e.g. Oct 2026" },
+        "status": { "type": "string", "enum": ["Active", "On Leave"], "description": "Employment status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "name", "role", "department", "mobileNumber", "monthlySalary", "lastPaidMonth", "status", "createdAt", "updatedAt"]
+    },
+    "SchoolRecord": {
+      "title": "SchoolRecord",
+      "description": "Unified operational record for Academics (Subjects, Exams, Schedules, Marks), Finance Expenses, and Communication Notices.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner administrator UID" },
+        "recordType": { "type": "string", "enum": ["Expense", "Notice", "Subject", "Exam", "Marks"], "description": "Record domain type" },
+        "title": { "type": "string", "description": "Primary title (Expense item, Notice title, Subject name, Exam name)" },
+        "subtitle": { "type": "string", "description": "Secondary info (Class name, Audience, Teacher, Student name)" },
+        "details": { "type": "string", "description": "Description, schedule date, or notice message" },
+        "amountOrScore": { "type": "integer", "description": "Expense amount or exam marks/maxMarks" },
+        "session": { "type": "string", "description": "Academic session" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Clients must submit FieldValue.serverTimestamp()" }
+      },
+      "required": ["userId", "recordType", "title", "subtitle", "details", "amountOrScore", "session", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/config/{configId}": {
+      "schema": { "$ref": "#/entities/SchoolConfig" },
+      "description": "School settings and class-wise form prices per administrator."
+    },
+    "/users/{userId}/enquiries/{enquiryId}": {
+      "schema": { "$ref": "#/entities/Enquiry" },
+      "description": "Student admission enquiries and form fee status."
+    },
+    "/users/{userId}/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Student" },
+      "description": "Enrolled and archived students."
+    },
+    "/users/{userId}/fee_transactions/{txId}": {
+      "schema": { "$ref": "#/entities/FeeTransaction" },
+      "description": "Fee payments, form collections, and deletion audit logs."
+    },
+    "/users/{userId}/staff/{staffId}": {
+      "schema": { "$ref": "#/entities/StaffMember" },
+      "description": "Staff directory and salary disbursement records."
+    },
+    "/users/{userId}/records/{recordId}": {
+      "schema": { "$ref": "#/entities/SchoolRecord" },
+      "description": "Expenses, notices, subjects, exams, and marks records."
+    }
+  }
+}

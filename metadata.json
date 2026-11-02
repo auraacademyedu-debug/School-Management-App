@@ -1,0 +1,6 @@
+{
+  "name": "EduPulse",
+  "description": "Comprehensive School Management System for admissions, student enquiries, class-wise fees, academics, staff payroll, and reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

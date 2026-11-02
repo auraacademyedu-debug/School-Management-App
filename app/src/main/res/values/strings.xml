@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">EduPulse</string>
+    <string name="school_portal_subtitle">SaaS School ERP &amp; Admission Suite</string>
+    <string name="sign_in_google">Continue with Google</string>
+    <string name="sign_in_headline">Administrator Portal Login</string>
+    <string name="sign_in_desc">Sign in securely with your Google account to manage admissions, class-wise fees, academics, and payroll.</string>
+    <string name="email_provider_console_title">Email/Password Provider Setup</string>
+    <string name="email_provider_console_notice">Google Sign-In is pre-provisioned and ready to use immediately. Note: Email/Password Authentication requires manual activation in your Firebase Console (Authentication &gt; Sign-in method &gt; Enable Email/Password) for project gen-lang-client-0630985601.</string>
+    <string name="open_firebase_console">Open Firebase Console</string>
+    <string name="dashboard_title">Dashboard Overview</string>
+    <string name="total_enquiries">Total Enquiries</string>
+    <string name="form_issued">Form Issued</string>
+    <string name="total_admissions">Total Admissions</string>
+    <string name="form_collection">Form Collection</string>
+    <string name="save_enquiry">Save Enquiry</string>
+    <string name="save_prices">Save Prices</string>
+    <string name="take_admission">Take Admission</string>
+    <string name="print_form">Print Form</string>
+    <string name="helpline_label">Helpline</string>
+    <string name="logout_label">Logout</string>
+</resources>
